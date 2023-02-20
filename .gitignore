@@ -1,6 +1,6 @@
 /ubuntu-venv/
 /*/__pycache__/
-media/audio_files/
-media/blog_pics/
-media/video_files/
-media/profile_pics/
+media/audio_files/*
+media/blog_pics/*
+media/video_files/*
+media/profile_pics/*
