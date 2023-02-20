@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<body>
+  <div>
+    <form method="post" action="{% url 'post-create' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>Title</div>
+      <div class="form-group">
+        <input class="form-control" id="title" name='title' type="text" >
+      </div>
+      <div>Content</div>
+       <textarea name="content" cols="40" rows="10" class="textarea form-control" required id="id_content" name="content"></textarea>
+       <div>BlogImage</div>
+      <div class="form-group">
+        <input id="blog_image" name='blog_image' type="file" >
+      </div>
+      
+       <div>Audio</div>
+      <div class="form-group">
+        <input id="audio" name='audio' type="file" >
+      </div>
+
+       <div>Video</div>
+      <div class="form-group">
+        <input id="video" name='video' type="file" >
+      </div>
+
+       <div>keyword</div>
+      <div class="form-group">
+        <input class="form-control" id="keywords" name='keywords' type="text" >
+      </div>
+      
+        <div class='form-group'>
+				<button class='btn btn-outline-info' type='submit'>Post</button>
+			</div>
+    </form>
+
+  </div>
+</body>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+    {
+    "name": "Nebula",
+    "python": "/mnt/c/Vivek/Blog/bin/python3",
+    "type": "python",
+    "request": "launch",
+    "program": "/mnt/c/Vivek/Blog/Blog-media/manage.py",
+    "console": "internalConsole",
+    "args": [
+        "runserver"
+    ],
+}
+    ],
+    "compounds": []
+}
+
+
