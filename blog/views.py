@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post
 from users.models import Profile
 from django.db.models import Q
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 
 # def home(request): 
@@ -15,12 +15,22 @@ from django.contrib.auth.decorators import login_required
 # 	posts = Post.objects.all()
 # 	return render(request, 'blog/home.html', posts)
 	
-class PostListView(ListView):
-	model = Post
-	template_name = 'blog/home.html' # '<app>/<model>_<viewtype>.html'
-	context_object_name = 'posts'
-	ordering = ['-date_posted']
-	paginate_by = 5
+# class PostListView(ListView):
+# 	model = Post
+# 	template_name = 'blog/home.html' # '<app>/<model>_<viewtype>.html'
+# 	context_object_name = 'posts'
+# 	ordering = ['-date_posted']
+# 	paginate_by = 5
+
+def post_list(request):
+	all_posts = Post.objects.all()
+	paginator = Paginator(all_posts, 5)
+	page_number = request.GET.get('page')
+	final_page = paginator.get_page(page_number)
+	context = {
+		"posts" : final_page
+	}	
+	return render(request, 'blog/home.html', context)
 
 class UserPostListView(ListView):
 	model = Post
@@ -32,11 +42,20 @@ class UserPostListView(ListView):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		return Post.objects.filter(author=user).order_by('date_posted')
 		
-
-class PostDetailView(DetailView):
-	model = Post
+# class PostDetailView(DetailView):
+# 	model = Post
 
 ########################################################################################################
+def post_detail_view(request, pk):
+	data = get_object_or_404(Post, pk=pk)
+	context = {
+		"post" : data
+	}
+	
+	return render(request, 'blog/post_detail.html', context)
+
+########################################################################################################
+
 @login_required
 def post_create(request):
 	if request.method == 'POST':
@@ -54,15 +73,15 @@ def post_create(request):
 	return render(request, "blog/post_create.html")
 		
 
-class PostCreateView(LoginRequiredMixin, CreateView): 
-	model = Post
+# class PostCreateView(LoginRequiredMixin, CreateView): 
+# 	model = Post
 		
-	fields = ['title', 'content', 'blog_image', 'audio', 'video', 'keywords']
+# 	fields = ['title', 'content', 'blog_image', 'audio', 'video', 'keywords']
 	
 
-	def form_valid(self, form):
-		form.instance.author = self.request.user
-		return super().form_valid(form)
+# 	def form_valid(self, form):
+# 		form.instance.author = self.request.user
+# 		return super().form_valid(form)
 	
 		
 
