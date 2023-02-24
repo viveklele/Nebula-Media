@@ -60,25 +60,22 @@
 
 
     </div> -->
-    {% if is_paginated %}
-        {% if page.has_previous %}
-            <a class="btn btn-outline-info mb-4" href="{% url 'gridview' %}?page=1">First</a>
-            <a class="btn btn-outline-info mb-4" href="{{ page.previous_page_number }}">Previous</a>
-        {% endif %}
+{% if posts.has_previous %}
+	<a class="btn btn-outline-info mb-4" href="/grid_view/?page=1">First</a>
+	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{ posts.previous_page_number }}">Previous</a>
+{% endif %}
 
-    {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <a class="btn btn-info mb-4" href="{% url 'gridview' %}?page={{ num }}">{{ num }}</a>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="btn btn-outline-info mb-4" href="{% url 'gridview' %}?page={{ num }}">{{ num }}</a>
-            {% endif %}
-    {% endfor %}
+{% for num in posts.paginator.page_range %}
+	{% if posts.number == num %}
+		<a class="btn btn-info mb-4" href="/grid_view/?page={{ num }}">{{ num }}</a>
+	{% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+		<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{ num }}">{{ num }}</a>
+{% endif %}
+{% endfor %}
 
-        {% if page_obj.has_next %}
-            <a class="btn btn-outline-info mb-4" href="{% url 'gridview' %}?page={{page.next_page_number}}">Next</a>
-            <a class="btn btn-outline-info mb-4" href="{% url 'gridview' %}?page={{ page.paginator.num_pages }}">Last</a>
-        {% endif %}
-
-    {% endif %}
+{% if posts.has_next %}
+	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{posts.next_page_number}}">Next</a>
+	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{ posts.paginator.num_pages }}">Last</a>
+{% endif %}
            
 {% endblock content%} 
