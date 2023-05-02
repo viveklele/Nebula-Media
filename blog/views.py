@@ -43,7 +43,7 @@ def post_detail_view(request, pk):
 def post_create(request):
 	if request.method == 'POST':
 		title = request.POST.get('title')	
-		content = request.POST.get('content')
+		content = request.POST.get('content')#
 		blog_image = request.FILES['blog_image']	
 		audio = request.FILES['audio']
 		video = request.FILES['video']
@@ -74,7 +74,7 @@ def post_update(request, pk):
 		form.keywords = request.POST.get('keywords')
 		form.author=request.user
 		form.save()
-		messages.success(request, "Your Pos update sucessfully!")
+		messages.success(request, "Your Post update sucessfully!")
 		return redirect('/')
 	context = {
 		'form': form,

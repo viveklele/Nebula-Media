@@ -9,21 +9,23 @@
         <input class="form-control" id="title" name='title' value="{{form.title}}" type="text" required>
       </div>
       <div>Content</div>
-       <textarea name="content" cols="40" rows="10" class="textarea form-control" required id="id_content" name="content">{{form.content}}</textarea>
+       <textarea name="content" cols="40" rows="10" class="textarea form-control" required id="id_content" name="content">{{form.content}}</textarea><br>
 
-       <div>BlogImage</div>
+       <div>BlogImage</div><br>
       <div class="form-group">
         {% if form.blog_image %}
         <img class="img-thumbnail" style="height:10rem;" src="{{ form.blog_image.url }}" alt="image" required><br>
         {% endif %}
+        <spam>Currently: </spam><strong>{{ form.blog_image }}</strong><br>
         <input id="blog_image" name='blog_image' type="file" >
       </div>
       
-       <div>Audio</div>
+       <div>Audio</div><br>
       <div class="form-group">
         {% if form.audio %}
         <audio src="{{ form.audio.url}}" controls></audio><br>
         {% endif %}
+        <spam>Currently: </spam><strong>{{ form.audio }}</strong><br>
         <input id="audio" name='audio' type="file">
       </div>
 
@@ -31,7 +33,8 @@
       <div class="form-group">
         {% if form.video %}
         <video width="600" height="400" src="{{ form.video.url }}" controls></video>
-        {% endif %}
+        {% endif %} <br>
+        <spam>Currently: </spam><strong>{{ form.video }}</strong><br>
         <input id="video" name='video' type="file">
       </div>
 
