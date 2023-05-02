@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
+# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.views.generic import ListView, UpdateView, DeleteView
+# from django.views.generic import ListView, UpdateView, DeleteView
 from .models import Post
 from users.models import Profile
 from django.db.models import Q
@@ -54,7 +54,7 @@ def post_create(request):
 
 		return redirect('blog-home')
 	return render(request, "blog/post_create.html")
-	############################################################################	
+	
 @login_required
 def post_update(request, pk):
 	form = get_object_or_404(Post, pk=pk)
@@ -81,30 +81,24 @@ def post_update(request, pk):
 	}
 	return render(request, 'blog/post_update.html', context)
 
-
-# class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): 
-# 	model = Post 
-# 	fields = ['title', 'content', 'blog_image', 'audio', 'video', 'keywords']
-	
-# 	def form_valid(self, form):
-# 		form.instance.author = self.request.user
-# 		return super().form_valid(form)
-		
-# 	def test_func(self):
-# 		post = self.get_object()
-# 		if self.request.user == post.author:
-# 			return True
-# 		return False
-
-	
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-	model = Post
-	success_url = '/'
-	def test_func(self):
-		post = self.get_object()
-		if self.request.user == post.author:
-			return True
-		return False
+@login_required
+def post_delete(request, pk):
+	post = get_object_or_404(Post, pk=pk)
+	context= {'post': post}
+	if request.method == 'POST':
+		# To delete media files from server
+		if post.blog_image:
+			storage, path = post.blog_image.storage, post.blog_image.path
+			storage.delete(path)
+		if post.audio:
+			storage, path = post.audio.storage, post.audio.path
+			storage.delete(path)
+		if post.video:
+			storage, path = post.video.storage, post.video.path
+			storage.delete(path)
+		post.delete()	
+		return HttpResponseRedirect('/')
+	return render(request, 'blog/post_delete.html', context)
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
