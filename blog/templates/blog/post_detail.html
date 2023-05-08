@@ -1,30 +1,67 @@
 {% extends "blog/base.html" %}
 {% block content %}
-	<article class="media content-section">
-		<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-	  <div class="media-body">
+<article class="media content-section">
+
+	<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+	<div class="media-body">
 		<div class="article-metadata">
-		  <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-		  <small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
-		  {% if post.author == user %}
+			<a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+			<small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
+			{% if post.author == user %}
 			<div>
 				<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
 				<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
 			</div>
-		  {% endif %}
+			{% endif %}
 		</div>
 		<h2 class="article-title">{{ post.title }}</h2>
 		<p class="article-content">{{ post.content }}</p>
-		<img class="img-thumbnail" src={{post.blog_image.url}}>
-		<h2>Music</h2>
-		<audio src="{{ post.audio.url }}" controls>audio</audio>		
-		<h2><b>Video</h2>
-		<video width="600" height="400" controls src="{{ post.video.url }}"></video> 
-		{% if post.author == user %}
-	<br><br><p>keywords are:</p>
-			<tags class="article-title">{{post.keywords}}</tags>
+		<!-- carousel-start -->
+		
+		{% if images|length == 1 %}	
+		{% for image in images %}
+			<img height="400" width="600" src="{{image.blog_image.url}}" alt="">
+		{% endfor %}
+		{% else %}
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				{% for image in images %}
+				<li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" 
+				{% if forloop.first	%}class="active" {% endif %}></li>
+				{% endfor %}
+			</ol>
+			<div class="carousel-inner">
+				{% for image in images %}
+				<div class="carousel-item {% if forloop.first %}active{% endif %}">
+					<img height="400" width="600" src="{{ image.blog_image.url }}" alt="{{ image.title }}" class="d-block w-100">
+				</div>
+				{% endfor %}
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
 		{% endif %}
-	  </div>
-	</article>
-{% endblock content%}  	
+		
+		<!-- /carousel-end -->
+		<h2>Music</h2>
+		<audio src="{{ post.audio.url }}" controls>audio</audio>
+		<h2><b>Video</h2>
+		<video width="600" height="400" controls src="{{ post.video.url }}"></video>
+		{% if post.author == user %}
+		<br><br>
+		<p>keywords are:</p>
+		<tags class="article-title">{{post.keywords}}</tags>
+		{% endif %}
+	</div>
+</article>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+{% endblock content%}

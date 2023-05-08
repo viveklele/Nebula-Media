@@ -1,16 +1,8 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-<!-- <style>
-	.content-section{
-		border: 4px solid #dddddd;
-		border-color: lightblue;
-		border-radius: 30px;
-	}
-</style> -->
 
-	<div class="my-data-container">
-		
+	<span class="my-data-container">
 	{% for post in posts %}
 	<!-- <div class="infinite-item"> -->
 		<article class="media content-section">
@@ -26,7 +18,7 @@
 		</article>
 	<!-- </div> -->
 	{% endfor %}
-	 <!-- </div> -->
+	</span>
 
 
 {% if posts.has_previous %}

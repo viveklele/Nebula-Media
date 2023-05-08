@@ -3,7 +3,7 @@
     "configurations": [
 
     {
-    "name": "Nebula",
+    "name": "Blog-media",
     "python": "/mnt/c/Vivek/Blog/bin/python3",
     "type": "python",
     "request": "launch",

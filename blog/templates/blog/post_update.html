@@ -10,16 +10,46 @@
       </div>
       <div>Content</div>
        <textarea name="content" cols="40" rows="10" class="textarea form-control" required id="id_content" name="content">{{form.content}}</textarea><br>
+<!-- -------------------------------------------------------------------------------------------- -->
 
+<!-- --------------------------------------------- -->
        <div>BlogImage</div><br>
       <div class="form-group">
-        {% if form.blog_image %}
-        <img class="img-thumbnail" style="height:10rem;" src="{{ form.blog_image.url }}" alt="image" required><br>
-        {% endif %}
-        <spam>Currently: </spam><strong>{{ form.blog_image }}</strong><br>
-        <input id="blog_image" name='blog_image' type="file" >
+{% if images|length == 1 %}	
+		{% for image in images %}
+			<img height="400" width="600" src="{{image.blog_image.url}}" alt="">
+		{% endfor %}
+		{% else %}
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				{% for image in images %}
+				<li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" 
+				{% if forloop.first	%}class="active" {% endif %}></li>
+				{% endfor %}
+			</ol>
+			<div class="carousel-inner">
+				{% for image in images %}
+				<div class="carousel-item {% if forloop.first %}active{% endif %}">
+					<img height="400" width="600" src="{{ image.blog_image.url }}" alt="{{ image.title }}" class="d-block w-100">
+				</div>
+				{% endfor %}
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+		{% endif %}
+	<br>
+		<!-- /carousel-end -->
+        <spam>Currently: </spam><strong>{{ images|length }} Pictures are seclected</strong><br>  
+        <input id="blog_image" name='blog_image' type="file" required multiple>
       </div>
-      
+      <!-- ---------------------------------------------------------------------------------------- -->
        <div>Audio</div><br>
       <div class="form-group">
         {% if form.audio %}
@@ -49,6 +79,9 @@
     </form>
 
   </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 {% endblock content %} 
 
