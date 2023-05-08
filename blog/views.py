@@ -73,15 +73,6 @@ def post_update(request, pk):
 		form.keywords = request.POST.get('keywords')
 		form.author=request.user
 		form.save()
-		# if post.blog_image:
-		# 	storage, path = post.blog_image.storage, post.blog_image.path
-		# 	storage.delete(path)
-
-		# for image in media:
-		# 	if image.blog_image:
-		# 		storage, path = image.blog_image.storage, image.blog_image.path
-		# 		storage.delete(path)
-		# 	image.delete()
 		if 'blog_image' in request.FILES:
 			for image in media:
 				storage, path = image.blog_image.storage, image.blog_image.path
@@ -90,8 +81,6 @@ def post_update(request, pk):
 			for image in request.FILES.getlist('blog_image'):
 				new_media = Media(post=form, blog_image=image)
 				new_media.save()
-		# if 'blog_image' in request.FILES:
-		# 	form.blog_image = request.FILES['blog_image']
 
 		messages.success(request, "Your Post update sucessfully!")
 		return redirect('/')
