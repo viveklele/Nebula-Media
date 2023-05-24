@@ -1,106 +1,168 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
+  <style>
+    /* Desktop styles */
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+    }
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    .box {
+      width: 30%;
+      background-color: #ddd;
+      padding: 23rem;
+      margin-bottom: 10rem;
+    }
 
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- carousel add  -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <link
-    rel="stylesheet"
-    href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"
-    /> 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-    <!-- for auto search-->
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
-
-    {% if title %}
-        <title>Django Blog - {{ title }}</title>
-    {% else %}
-        <title>Django Blog</title>
-    {% endif %}
-
-    <style>
-      button{
-        background-color:rgb(139, 230, 65);
+    /* Tablet styles */
+    @media only screen and (max-width: 768px) {
+      .container {
+        flex-wrap: wrap;
       }
-      .navbar-expand-md .navbar-nav .nav-link{
-        padding-right: 0.5px;
+
+      .box {
+        width: 45%;
+        margin-right: 5%;
+        margin-bottom: 20px;
       }
-    
-    </style>
+
+      .box:nth-child(even) {
+        margin-right: 0;
+      }
+    }
+
+    /* Mobile styles */
+    @media only screen and (max-width: 480px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .box {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  </style>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- carousel add  -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- jquery autocomplete css -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+  {% if title %}
+  <title>Django Blog - {{ title }}</title>
+  {% else %}
+  <title>Django Blog</title>
+  {% endif %}
+
+  <style>
+    button {
+      background-color: rgb(139, 230, 65);
+    }
+
+    .navbar-expand-md .navbar-nav .nav-link {
+      padding-right: 0.5px;
+    }
+  </style>
 </head>
 
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Nebula</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Nebula</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+          aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-              
-              {% if request.get_full_path == "/" %}
-                  <a class="nav-item nav-link" href="{% url 'blog-grid_view' %}">Change View</a>
-              {% else %}
-                  <a class="nav-item nav-link" href="{% url 'blog-home' %}">Change View</a>
-              {% endif %}
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+            <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
 
-                
-              <form class="form-inline" action="/search" method="GET">
-                <input name="query" class="form-control mr-sm-2" style="margin-left: 503px;" type="search" placeholder="Search" aria-label="Search" id="query">
-                <a href="{% url 'search' %}"></a>
-                <button style="background-color: rgb(4, 199, 92);" class="btn my-2 my-sm-0" type="submit">Search</button>
-              </form>
+            {% if request.get_full_path == "/" %}
+            <a class="nav-item nav-link" href="{% url 'blog-grid_view' %}">Change View</a>
+            {% elif request.get_full_path == '/grid_view/' %}
+            <a class="nav-item nav-link" href="{% url 'blog-home' %}">Change View</a>
+            {% endif %}
 
-              <!--show suggetion  -->
 
-                <!-- <div id="autocomplete" class="autocomplete">
-                  <input class="autocomplete-input" />
-                  <a href="{% url 'search' %}"></a> 
-                  <ul class="autocomplete-result-list"></ul>
-                </div> -->
-
+            <form class="form-inline" action="/search" method="GET">
+              <input name="query" class="form-control mr-sm-2" style="margin-left: 30rem;" type="search"
+                placeholder="Search" aria-label="Search" id="tags">
+              <a href="{% url 'search' %}"></a>
+              <button style="background-color: rgb(4, 199, 79);" class="btn my-2 my-sm-0" type="submit">Search</button>
+            </form>
             <div class="navbar-nav">
-				{% if user.is_authenticated %}
-					 <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-					 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-					 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-				{% else %}
+
+              {% if user.is_authenticated %}
+              <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+              <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              {% else %}
               <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-			  {% endif %}
+              {% endif %}
             </div>
           </div>
         </div>
-      </nav>
-    </header>
-    <main role="main" class="container-fluid">
-      <div class="row">
-        <div class="col-md-8">
-		   {% if messages %}
-			{% for message in messages%}
-				<div class="alert alert-{{ message.tags }}">
-					{{ message }}
-				</div>
-				
-			{% endfor %}
-		   {% endif %}
-          {% block content %}{% endblock %}
+      </div>
+    </nav>
+  </header>
+  <main role="main" class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        {% if messages %}
+        {% for message in messages%}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
         </div>
 
+        {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
       </div>
-    </main>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <script>
+    $(function () {
+      $("#tags").autocomplete({
+        source: "{% url 'autosuggest' %}",
+        select: function (event, ui) {
+          window.location.href = ui.item.url; // Redirect to the post's URL
+          return false;
+        },
+        focus: function (event, ui) {
+          $("#tags").val(ui.item.title);
+          return false;
+        },
+        minLength: 3 // After 3 letter type suggetion will start
+      }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li>")
+          .append("<div><strong><a href='" + item.url + "'>" + item.title + "</a></strong></div>")
+          .appendTo(ul);
+      };
+    });
+  </script>
 </body>
-</html> 
+</html>

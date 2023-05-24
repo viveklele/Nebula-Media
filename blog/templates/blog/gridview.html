@@ -33,33 +33,20 @@
         <div class="row infinite-item">
             {% endif %}
             <div class="col-lg-6 container-fluid">
-            <!-- <div class="card container-fluid" style="margin: 25px; border-radius: 2.25rem;"> -->
                 <article class="media content-section">
                     <img class="rounded-circle col-sm-4" style="padding: 15px;" src="{{ post.author.profile.image.url }}">
-                <!-- <div class="media-body"></div> -->
                     <div class="card-body" >
                     <a style="padding: 1px" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     <small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
                     <h3><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
-                    <!-- <p style="padding-right: 10px;">{{ post.content }}</p> -->
                     </div>
                 </article>
         </div>
         {% if forloop.counter|divisibleby:43 %}
-        <!-- </div> -->
         <div class="row mx-auto">{% endif %}{% if forloop.last %}</div>{% endif %}
         {% endfor %}
     </div> 
-    <!-- <div class="page-links">
-        {% if page.has_previous %}
-        {% endif %}
-        <a href="#">prevouts</a>
-        {% if page.has_next %}
-        <a href="#">next</a>
-        {% endif %}
-
-
-    </div> -->
+ 
 {% if posts.has_previous %}
 	<a class="btn btn-outline-info mb-4" href="/grid_view/?page=1">First</a>
 	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{ posts.previous_page_number }}">Previous</a>
@@ -77,5 +64,5 @@
 	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{posts.next_page_number}}">Next</a>
 	<a class="btn btn-outline-info mb-4" href="/grid_view/?page={{ posts.paginator.num_pages }}">Last</a>
 {% endif %}
-           
+
 {% endblock content%} 

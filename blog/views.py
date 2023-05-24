@@ -6,7 +6,8 @@ from django.db.models import Q
 from django.core.paginator import Paginator 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from os import remove
+from django.http import JsonResponse
+from django.urls import reverse
 
 def post_list(request):
 	all_posts = Post.objects.all().order_by('-date_posted')
@@ -14,7 +15,7 @@ def post_list(request):
 	page_number = request.GET.get('page')
 	final_page = paginator.get_page(page_number)
 	context = {
-		"posts" : final_page
+		"posts" : final_page,
 	}	
 	return render(request, 'blog/home.html', context)
 		
@@ -109,7 +110,12 @@ def post_delete(request, pk):
 		if post.video:
 			storage, path = post.video.storage, post.video.path
 			storage.delete(path)
+
+		media.delete()
+
 		post.delete()	
+			
+			
 		return HttpResponseRedirect('/')
 	return render(request, 'blog/post_delete.html', context)
 
@@ -129,15 +135,32 @@ def grid_view(request):
 def search(request):
 	query = request.GET['query']
 
-	if len(query) > 20:
+	if len(query) > 50:
 		allPosts = Post.objects.none()
-		user = Profile.objects.none()
 	else:
 		allPosts = Post.objects.filter(Q(title__icontains=query) | Q(author__username__icontains=query) | 
 		Q(keywords__icontains=query)).order_by('-date_posted')
 
 	paras = {
-		'allPosts': allPosts, 'query': query
+		'allPosts': allPosts, 
 	}
 	return render(request, 'blog/search.html', paras)
 
+def autosuggest(request):
+	print(request.GET)
+	query = request.GET.get('term')
+	queryset = Post.objects.filter(
+		Q(title__icontains=query) | Q(author__username__icontains=query) | Q(keywords__icontains=query)
+		).order_by('-date_posted')[:5] 
+
+	mylist = []
+	# mylist += [x.title for x in queryset]
+	for i in queryset:
+		mylist.append({
+			'title': i.title,
+			'author': i.author.username,  # Extract the username from the User object
+			'keywords': i.keywords,
+			'url': reverse('post-detail', args=[i.pk])
+		})
+
+	return JsonResponse(mylist, safe=False)

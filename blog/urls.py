@@ -9,6 +9,8 @@ urlpatterns = [
 	path('post/<int:pk>/delete/', views.post_delete, name='post-delete'),
 	path('about/', views.about, name='blog-about'),
 	path('grid_view/', views.grid_view, name='blog-grid_view'),
+	path('post/new/', views.post_create, name='post-create'),
 	path('search/', views.search, name='search'),
-	path('post/new/', views.post_create, name='post-create')
+	path('autosuggest/', views.autosuggest, name='autosuggest'),
+
 ]
