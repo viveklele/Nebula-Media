@@ -33,16 +33,18 @@
         <div class="row infinite-item">
             {% endif %}
             <div class="col-lg-6 container-fluid">
-                <article class="media content-section">
+                <article class="media content-section post-bg">
                     <img class="rounded-circle col-sm-4" style="padding: 15px;" src="{{ post.author.profile.image.url }}">
                     <div class="card-body" >
                     <a style="padding: 1px" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     <small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
-                    <h3><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                    <h3><a class="article-title post-bg" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+			        <p class="article-content">{{ post.content }}</p>
+
                     </div>
                 </article>
         </div>
-        {% if forloop.counter|divisibleby:43 %}
+        {% if forloop.counter|divisibleby:6 %}
         <div class="row mx-auto">{% endif %}{% if forloop.last %}</div>{% endif %}
         {% endfor %}
     </div> 

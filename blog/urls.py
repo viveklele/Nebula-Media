@@ -12,5 +12,4 @@ urlpatterns = [
 	path('post/new/', views.post_create, name='post-create'),
 	path('search/', views.search, name='search'),
 	path('autosuggest/', views.autosuggest, name='autosuggest'),
-
 ]

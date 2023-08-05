@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.contrib.auth.models import User
 from .models import Post, Media
-from users.models import Profile
 from django.db.models import Q
 from django.core.paginator import Paginator 
 from django.contrib.auth.decorators import login_required
@@ -22,7 +21,6 @@ def post_list(request):
 def user_post_list(request, username):
 	user = User.objects.get(username=username)
 	post = Post.objects.filter(author=user).order_by('-date_posted')
-	# Pagination 	
 	paginator = Paginator(post, 5)
 	page_number = request.GET.get('page')
 	final_page = paginator.get_page(page_number)
@@ -56,7 +54,7 @@ def post_create(request):
 			media.save()
 		return redirect('blog-home')
 	return render(request, "blog/post_create.html")
-	
+ 	
 @login_required
 def post_update(request, pk):
 	form = get_object_or_404(Post, pk=pk)
@@ -82,7 +80,6 @@ def post_update(request, pk):
 			for image in request.FILES.getlist('blog_image'):
 				new_media = Media(post=form, blog_image=image)
 				new_media.save()
-
 		messages.success(request, "Your Post update sucessfully!")
 		return redirect('/')
 	context = {
@@ -103,19 +100,14 @@ def post_delete(request, pk):
 				storage, path = image.blog_image.storage, image.blog_image.path
 				storage.delete(path)
 				image.delete()
-			
 		if post.audio:
 			storage, path = post.audio.storage, post.audio.path
 			storage.delete(path)
 		if post.video:
 			storage, path = post.video.storage, post.video.path
 			storage.delete(path)
-
 		media.delete()
-
 		post.delete()	
-			
-			
 		return HttpResponseRedirect('/')
 	return render(request, 'blog/post_delete.html', context)
 
@@ -154,7 +146,6 @@ def autosuggest(request):
 		).order_by('-date_posted')[:5] 
 
 	mylist = []
-	# mylist += [x.title for x in queryset]
 	for i in queryset:
 		mylist.append({
 			'title': i.title,

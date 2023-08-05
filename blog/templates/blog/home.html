@@ -1,18 +1,17 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-
-	<div class="infinite-container'">
+	<div class="infinite-container" style="margin-left: 10rem;">
 	{% for post in posts %}
 	<div class="infinite-item">
-		<article class="media content-section">
+		<article class="media post-bg content-section">
 			<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
 		  <div class="media-body">
 			<div class="article-metadata">
 			  <a class="mr-2" href="{% url 'user-posts' post.author.username %}" >{{ post.author }}</a>
-			  <small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
+			  <small class="post-bg">{{ post.date_posted | date:"F d, Y f A" }}</small>
 			</div>
-			<h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+			<h2><a class="article-title post-bg" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
 			<p class="article-content">{{ post.content }}</p>
 		  </div>
 		</article>
@@ -37,14 +36,5 @@
 	<a class="btn btn-outline-info mb-4" href="/?page={{posts.next_page_number}}">Next</a>
 	<a class="btn btn-outline-info mb-4" href="/?page={{ posts.paginator.num_pages }}">Last</a>
 {% endif %} 
-
-	<!-- <script>
-    var infinite = new Waypoint.Infinite({
-      element: $('.infinite-container')[0]
-    });
-  </script> -->
-
-	<!-- <script src="{% static 'blog/jquery.waypoints.min.js' %}"></script> -->
-    <!-- <script src="{% static 'blog/infinite.min.js' %}"></script> -->
 
 {% endblock content%}  	

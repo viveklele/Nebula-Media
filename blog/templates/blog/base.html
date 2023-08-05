@@ -3,57 +3,8 @@
 <html>
 
 <head>
-  <style>
-    /* Desktop styles */
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .box {
-      width: 30%;
-      background-color: #ddd;
-      padding: 23rem;
-      margin-bottom: 10rem;
-    }
-
-    /* Tablet styles */
-    @media only screen and (max-width: 768px) {
-      .container {
-        flex-wrap: wrap;
-      }
-
-      .box {
-        width: 45%;
-        margin-right: 5%;
-        margin-bottom: 20px;
-      }
-
-      .box:nth-child(even) {
-        margin-right: 0;
-      }
-    }
-
-    /* Mobile styles */
-    @media only screen and (max-width: 480px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .box {
-        width: 100%;
-        margin-right: 0;
-      }
-    }
-  </style>
-
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -82,18 +33,18 @@
   </style>
 </head>
 
-<body>
-  <header class="site-header">
+<body class="body-image">
+  <heade class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Nebula</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
           aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+            <a class="nav-link nav-item mr-4" href="{% url 'blog-home' %}">Nebula</a>
+            <a class="nav-item nav-link font-col" href="{% url 'blog-home' %}">Home</a>
             <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
 
             {% if request.get_full_path == "/" %}
@@ -101,16 +52,15 @@
             {% elif request.get_full_path == '/grid_view/' %}
             <a class="nav-item nav-link" href="{% url 'blog-home' %}">Change View</a>
             {% endif %}
-
-
-            <form class="form-inline" action="/search" method="GET">
-              <input name="query" class="form-control mr-sm-2" style="margin-left: 30rem;" type="search"
+          
+            <form class="form-inline" style="position: relative;" action="/search" method="GET">
+              <input name="query" class="form-control mr-sm-2 search-input post-bg" style="margin-left: 32rem;" type="search"
                 placeholder="Search" aria-label="Search" id="tags">
-              <a href="{% url 'search' %}"></a>
-              <button style="background-color: rgb(4, 199, 79);" class="btn my-2 my-sm-0" type="submit">Search</button>
+                <a href="{% url 'search' %}"></a>
+                <button class="btn my-2 btn-outline-success my-sm-0" type="submit">Search</button>
             </form>
-            <div class="navbar-nav">
 
+            <div class="navbar-nav">
               {% if user.is_authenticated %}
               <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
@@ -124,7 +74,7 @@
         </div>
       </div>
     </nav>
-  </header>
+  </heade>
   <main role="main" class="container-fluid">
     <div class="row">
       <div class="col-md-8">
@@ -156,7 +106,7 @@
           $("#tags").val(ui.item.title);
           return false;
         },
-        minLength: 3 // After 3 letter type suggetion will start
+        minLength: 1 // After 3 letter type suggetion will start
       }).autocomplete("instance")._renderItem = function (ul, item) {
         return $("<li>")
           .append("<div><strong><a href='" + item.url + "'>" + item.title + "</a></strong></div>")
@@ -165,4 +115,5 @@
     });
   </script>
 </body>
+
 </html>

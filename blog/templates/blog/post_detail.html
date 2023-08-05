@@ -1,11 +1,10 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-<article class="media content-section">
-
+<article style="margin-left: 10rem;" class="media content-section post-bg">
 	<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-	<div class="media-body">
-		<div class="article-metadata">
+	<div class="media-body post-bg">
+		<div class="article-metadata" >
 			<a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
 			<small class="text-muted">{{ post.date_posted | date:"F d, Y f A" }}</small>
 			{% if post.author == user %}
@@ -15,9 +14,8 @@
 			</div>
 			{% endif %}
 		</div>
-		<h2 class="article-title">{{ post.title }}</h2>
-		<p class="article-content">{{ post.content }}</p>
-		<!-- carousel-start -->
+		<h2 class="article-title post-bg">{{ post.title }}</h2>
+		<p class="article-content post-bg">{{ post.content }}</p>
 		
 		{% if images|length == 1 %}	
 		{% for image in images %}
