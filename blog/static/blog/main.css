@@ -1,6 +1,6 @@
 body{
   margin-top: 5rem;
-  background-color: #685d5d;
+  background-color: #faf6f6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -110,3 +110,4 @@ a.article-title:hover {
 input:focus{
   border-color: #333333;
 }
+/* commit */
