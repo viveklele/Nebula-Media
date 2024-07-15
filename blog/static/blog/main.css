@@ -90,7 +90,7 @@ a.article-title:hover {
   border: 4px rebeccapurple solid;
 }
 
-.body-image{
+/* .body-image{
   background: url(https://res.cloudinary.com/practicaldev/image/fetch/s--BuPz-p40--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nphrgz8yfnjylrwfr0yl.png);
 
 } 
@@ -110,4 +110,4 @@ a.article-title:hover {
 input:focus{
   border-color: #333333;
 }
-/* commit */
+commit */
