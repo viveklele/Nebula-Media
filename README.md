@@ -4,20 +4,17 @@ Nebula-Media is a project repository by [viveklele](https://github.com/viveklele
 
 ## Overview
 
-Nebula-Media aims to provide media-related functionality. This could include media management, processing, streaming, or related utilities. *(Update this section with a more specific project description as needed.)*
+Nebula-Media aims to provide media-related functionality. This could include media management, processing, streaming, or related utilities.
 
 ## Features
 
 - Media processing capabilities
 - Modular and extensible architecture
 - Written in languages: *(add specifics, e.g., Python, JavaScript, etc.)*
-- *(Add or remove features as appropriate for your project)*
 
 ## Getting Started
 
 ### Prerequisites
-
-- *(List required software, dependencies, or tools, e.g., Python 3.8+, Node.js, etc.)*
 
 ### Installation
 
@@ -26,11 +23,6 @@ Nebula-Media aims to provide media-related functionality. This could include med
     git clone https://github.com/viveklele/Nebula-Media.git
     cd Nebula-Media
     ```
-2. *(Add installation steps, e.g., pip install -r requirements.txt, npm install, etc.)*
-
-### Usage
-
-- *(Provide instructions or examples for using the project, e.g., running scripts, starting a server, etc.)*
 
 ## Contributing
 
