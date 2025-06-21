@@ -33,11 +33,7 @@ Contributions are welcome! Please open issues or pull requests to discuss potent
 3. Make your changes
 4. Commit your changes (`git commit -m 'Add some feature'`)
 5. Push to the branch (`git push origin feature/your-feature`)
-6. Open a pull request
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). *(Or specify another license as appropriate.)*
+6. Open a pull requests
 
 ## Contact
 
